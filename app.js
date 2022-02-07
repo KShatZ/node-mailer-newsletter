@@ -6,15 +6,15 @@ const nodemailer = require("nodemailer");
 const app = express();
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
-app.set("view-engine", "ejs");
+app.set("view engine", "ejs");
 
 // Database Configuration
-mongoose.connect("mongodb://localhost:27017/nodeMailerDB");
+// mongoose.connect("mongodb://localhost:27017/nodeMailerDB");
 
 
 // ROUTING
 app.get("/", function(req, res){
-    res.send("Working");
+    res.render("sign-up", {pageTitle: "Sign Up"});
 });
 
 app.listen("3000", function(){

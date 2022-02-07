@@ -1,0 +1,58 @@
+<%- include("partials/header"); %> 
+
+<div class="container">
+
+    <h1 class="text-center">Sign-Up for our Newsletters!</h1>
+    <form class="newsletterForm" action="/" method="POST">
+        <!-- Full Name -->
+        <div class="row">
+            <div class="col">
+                <input id="firstName" class="form-control" type="text" placeholder="First Name" required>    
+            </div>
+            <div class="col">
+                <input id="lastName" class="form-control" type="text" placeholder="Last Name" required>
+            </div>
+        </div>
+        <!-- Email -->
+        <input id="email" class="form-control" type="email" placeholder="Email" required>
+        <!-- Newsletter -->
+        <h4>Choose the topics you are interested in:</h4>
+        <div class="row d-flex justify-content-center">
+            <div class="col">
+                <div class="form-check">
+                    <input id="edmCheck" class="form-check-input" type="checkbox" value="" required>
+                    <label class="form-check-label" for="edmCheck">Electronic Dance Music</label>
+                </div>
+                <div class="form-check">
+                    <input id="selfDevelopmentCheck" class="form-check-input" type="checkbox" value="" required> 
+                    <label class="form-check-label" for="selfDevelopmentCheck">Self Development</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <input id="seoCheck" class="form-check-input" type="checkbox" value="" required>
+                    <label class="form-check-label" for="seoCheck">Search Engine Optimization</label>
+                </div>
+                <div class="form-check">
+                    <input id="cryptoCheck" class="form-check-input" type="checkbox" value="" required>
+                    <label class="form-check-label" for="cryptoCheck">Cryptocurrency</label>
+                </div>
+            </div>
+        </div>
+        <!-- Agree to Terms -->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-check-label" for="invalidCheck">
+              Agree to the terms and conditions
+            </label>
+        </div>
+        
+        <button class="btn btn-primary" type="submit">Join Newsletter</button>
+    </form>
+
+</div>
+
+
+
+
+<%- include("partials/footer"); %> 

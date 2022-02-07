@@ -1,0 +1,21 @@
+body {
+    background-color: #393E46 !important;
+    color: #EEEEEE !important;
+}
+
+
+/* Form */
+.newsletterForm {
+    max-width: 50%;
+    margin: auto;
+}
+
+.form-control {
+    margin-bottom: 15px;
+}
+
+
+
+
+
+
