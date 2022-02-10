@@ -29,7 +29,12 @@ const subscriberSchema = new mongoose.Schema({
     },
     interests: {
         required: true,
-        type: [String]
+        type: {
+            edm: Boolean,
+            selfDevelopment: Boolean,
+            seo: Boolean,
+            crypto: Boolean
+        }
     }
 });
 const Subscriber = mongoose.model("Subscriber", subscriberSchema);
@@ -58,28 +63,41 @@ app.post("/", function(req,res){
 
             // User has not signed up
             if (!result){
-                console.log("New subscriber");
+                console.log("New subscriber: ", firstName, lastName);
                 // Adding subscriber to DB
-                const subscriber = new Subscriber({
+                let subscriber = new Subscriber({
                     firstName: firstName,
                     lastName: lastName,
-                    email: email
+                    email: email,
+                    interests: {}
                 });
                 if (edmNews){
-                    subscriber.interests.push("edm");
-                    console.log("Added edm");
+                    subscriber.interests.edm = true;
+                    console.log(firstName, lastName,"- Interested in edm");
+                }else {
+                    subscriber.interests.edm = false;
+                    console.log(firstName, lastName,"- Not interested in edm");
                 }
                 if (selfDevNews){
-                    subscriber.interests.push("self development");
-                    console.log("Added self development");
+                    subscriber.interests.selfDevelopment = true;
+                    console.log(firstName, lastName,"- Interested in self development");
+                }else {
+                    subscriber.interests.selfDevelopment = false;
+                    console.log(firstName, lastName,"- Not interested in self development");
                 }
                 if (seoNews){
-                    subscriber.interests.push("seo");
-                    console.log("Added seo");
+                    subscriber.interests.seo = true;
+                    console.log(firstName, lastName,"- Interested in seo");
+                }else {
+                    subscriber.interests.seo = false;
+                    console.log(firstName, lastName,"- Not interested in seo");
                 }
                 if (cryptoNews){
-                    subscriber.interests.push("crypto");
-                    console.log("Added crypto");
+                    subscriber.interests.crypto = true;
+                    console.log(firstName, lastName,"- Interested in crypto");
+                }else {
+                    subscriber.interests.crypto = false;
+                    console.log(firstName, lastName,"- Not interested in crypto");
                 }
                 subscriber.save();
 
