@@ -1,5 +1,6 @@
+require('dotenv').config();
 const express = require("express");
-const { type } = require("express/lib/response");
+const { google } = require("googleapis");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 
@@ -13,7 +14,6 @@ app.set("view engine", "ejs");
 mongoose.connect("mongodb://localhost:27017/nodeMailerDB");
 
 const subscriberSchema = new mongoose.Schema({
-
     firstName: {
         required: true,
         type: String
@@ -101,48 +101,53 @@ app.post("/", function(req,res){
                 }
                 subscriber.save();
 
-                // Sending Confirmation Email
-                nodemailer.createTestAccount(function(err, account){
-
-                    if (err){
+                // Google OAuth2
+                const oauth2Client = new google.auth.OAuth2(
+                    process.env.CLIENT_ID, 
+                    process.env.CLIENT_SECRET, 
+                    process.env.REDIRECT_URI
+                    );
+                oauth2Client.setCredentials({refresh_token: process.env.REFRESH_TOKEN});
+                const accessToken = oauth2Client.getAccessToken(function(err){
+                    if(!err) {
+                        console.log("Access Token:", accessToken);
+                    } else {
                         console.log(err);
-                        return (process.end(1));
-                    } 
-                    console.log("Account User:", account.user);
-                    console.log("Account Pass:", account.pass);
-                    console.log("Account Host:", account.smtp.host);
-                    console.log("Account Port:", account.smtp.port);
-                    console.log("Account Secure:", account.smtp.secure);
-
-                    let transporter = nodemailer.createTransport({
-                        host: account.smtp.host,
-                        port: account.smtp.port,
-                        secure: account.smtp.secure,
-                        auth: {
-                            user: account.user,
-                            pass: account.pass
-                        }
-                    });
-                    let message = {
-                        from: "Newsletter Test",
-                        to: email,
-                        subject: "Thank You to Subscribing to our Newsletter!",
-                        html:
-                        `<h1>Welcome to the family ${firstName} ${lastName}!</h1>
-                        <p>
-                        Thank you for signing up to our Newsletter! You will start to receive articles based 
-                        on the interests you selected starting on the next rotation
-                        </p>`
                     }
-                    transporter.sendMail(message, function(err, info){
-                        if (!err) {
-                            console.log("The message was sent");
-                            console.log("Message ID:", info.messageId);
-                            console.log("Message Response:", info.response);
-                        } else {
-                            console.log(err);
-                        }
-                    });
+                });
+                // Mail Set Up
+                let transporter = nodemailer.createTransport({
+                    host: "smtp.gmail.com",
+                    port: 465,
+                    secure: true,
+                    auth: {
+                        type: "OAUTH2",
+                        user: process.env.EMAIL,
+                        accessToken: accessToken,
+                        clientId: process.env.CLIENT_ID,
+                        refreshToken: process.env.REFRESH_TOKEN,
+                        clientSecret: process.env.CLIENT_SECRET
+                    }
+                });
+                let message = {
+                    from: "Newsletter Test",
+                    to: email,
+                    subject: "Thank You to Subscribing to our Newsletter!",
+                    html:
+                    `<h1>Welcome to the family ${firstName} ${lastName}!</h1>
+                    <p>
+                    Thank you for signing up to our Newsletter! You will start to receive articles based 
+                    on the interests you selected starting on the next rotation
+                    </p>`
+                }
+                transporter.sendMail(message, function(err, info){
+                    if (!err) {
+                        console.log("The message was sent");
+                        console.log("Message ID:", info.messageId);
+                        console.log("Message Response:", info.response);
+                    } else {
+                        console.log(err);
+                    }
                 });
             } else { 
                 console.log("You have already signed up for our newsletter.")

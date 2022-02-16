@@ -9,8 +9,10 @@
   "author": "kirill",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.2",
+    "googleapis": "^95.0.0",
     "mongoose": "^6.2.0",
     "nodemailer": "^6.7.2"
   }
