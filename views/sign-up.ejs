@@ -2,12 +2,12 @@
 
 <div class="container">
 
-    <h1 class="text-center">Sign-Up for our Newsletters!</h1>
+    <h1 class="text-center main-header">Sign-Up For Our Newsletters!</h1>
     <form class="newsletterForm" action="/" method="POST">
         <!-- Full Name -->
         <div class="row">
             <div class="col">
-                <input id="firstName" class="form-control" type="text" placeholder="First Name" name="firstName" required>    
+                <input id="firstName" class="form-control" type="text" placeholder="First Name" name="firstName" required>
             </div>
             <div class="col">
                 <input id="lastName" class="form-control" type="text" placeholder="Last Name" name="lastName" required>
@@ -15,44 +15,33 @@
         </div>
         <!-- Email -->
         <input id="email" class="form-control" type="email" placeholder="Email" name="email" required>
-        <!-- Newsletter -->
-        <h4>Choose the topics you are interested in:</h4>
-        <div class="row d-flex justify-content-center">
-            <div class="col">
-                <div class="form-check">
-                    <input id="edmCheck" class="form-check-input" type="checkbox" name="edmCheckbox">
-                    <label class="form-check-label" for="edmCheck">Electronic Dance Music</label>
-                </div>
-                <div class="form-check">
-                    <input id="selfDevelopmentCheck" class="form-check-input" type="checkbox" name="selfDevCheckbox"> 
-                    <label class="form-check-label" for="selfDevelopmentCheck">Self Development</label>
-                </div>
+        <!-- Newsletter Topics -->
+        <h4 class="topics-header">Choose The Topics You Are Interested In</h4>
+        <div class="topic-selection">
+            <div class="form-check form-check-inline topics">
+                <input id="edmCheck" class="form-check-input" type="checkbox" name="edmCheckbox">
+                <label class="form-check-label" for="edmCheck">Electronic Dance Music</label>
             </div>
-            <div class="col">
-                <div class="form-check">
-                    <input id="seoCheck" class="form-check-input" type="checkbox" name="seoCheckbox">
-                    <label class="form-check-label" for="seoCheck">Search Engine Optimization</label>
-                </div>
-                <div class="form-check">
-                    <input id="cryptoCheck" class="form-check-input" type="checkbox" name="cryptoCheckbox">
-                    <label class="form-check-label" for="cryptoCheck">Cryptocurrency</label>
-                </div>
+            <div class="form-check form-check-inline topics">
+                <input id="selfDevelopmentCheck" class="form-check-input" type="checkbox" name="selfDevCheckbox"> 
+                <label class="form-check-label" for="selfDevelopmentCheck">Self Development</label>
+            </div>
+            <div class="form-check form-check-inline topics">
+                <input id="seoCheck" class="form-check-input" type="checkbox" name="seoCheckbox">
+                <label class="form-check-label" for="seoCheck">Search Engine Optimization</label>
+            </div>
+            <div class="form-check form-check-inline topics">
+                <input id="cryptoCheck" class="form-check-input" type="checkbox" name="cryptoCheckbox">
+                <label class="form-check-label" for="cryptoCheck">Cryptocurrency</label>
             </div>
         </div>
-        <!-- Agree to Terms -->
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" >
-            <label class="form-check-label" for="invalidCheck">
-              Agree to the terms and conditions
-            </label>
+        <div class="container submit-btn-div">
+            <div class="form-text">
+                <small>By subscribing to our newsletter, you agree to abide by our Terms and Conditions.</small>
+            </div>
+            <button class="btn submit-btn" type="submit">Join Newsletter</button>
         </div>
-        
-        <button class="btn btn-primary" type="submit">Join Newsletter</button>
     </form>
-
 </div>
-
-
-
 
 <%- include("partials/footer"); %> 
