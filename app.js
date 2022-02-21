@@ -155,7 +155,16 @@ app.post("/", function(req,res){
                         });
                     } else {
                         console.log(err);
-                        // Redirect to failure page and remove subscriber from DB
+                        // Alert user of failure and remove from DB
+                        Subscriber.deleteOne({email: email}, function(err){
+                            if (!err) {
+                                console.log("There was an error sending the email...");
+                                console.log("User was removed from database and no email was sent");
+                                res.send("<script>alert('There was an issue with the email service, please try again...'); window.location.href = '/';</script>");
+                            } else {
+                                console.log(err);
+                            }
+                        });
                     }
                 });
             } else { 
