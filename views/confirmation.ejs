@@ -1,0 +1,17 @@
+<%- include("partials/header"); %>
+<div class="container text-center">
+    <h1 id="confirmation-header">Welcome to the community <%=subscriberName%>!</h1>
+    <div id="confirmation-container">
+        <h3>You will receive a newsletter for the topic(s) you chose below:</h3>
+        <ul id="topics-selected">
+            <%topics.forEach(function(topic){%>
+                <%if(topic){%>
+                  <li><%=topic%></li>
+                <%}%>
+            <%});%>
+        </ul>
+        <hr id="confirmation-hr">
+        <p id="confirmation-location">We have sent a confirmation email to <%=email%></p>
+    </div>
+</div>
+<%- include("partials/footer"); %> 

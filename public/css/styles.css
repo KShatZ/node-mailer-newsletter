@@ -4,7 +4,8 @@ body {
 }
 
 /**** Newsletter Sign-Up Page  ****/
-.main-header{
+#sign-up-header{
+    text-align: center;
     margin: 75px 0px 50px 0px;
 }
 /* Form */
@@ -73,11 +74,33 @@ body {
 }
 
 /****  Confirmation Page ****/
-
-
-
+#confirmation-header {
+    margin-top: 35px;
+    font-size: calc(1.5rem + 1.5vw);
+}
+#confirmation-container {
+    border: 1px solid #222831;
+    margin: 75px auto 0 auto;
+    padding-top: 30px;
+    text-align: center;
+    width: 75%;
+}
+#topics-selected {
+    margin: 15px 0 15px 0;
+    padding: 0;
+    list-style: none;
+}
+#confirmation-hr {
+    margin: 15px auto 10px auto;
+    width: 50%;
+    color: #00ADB5;
+}
+#confirmation-location {
+    font-size: .75rem;
+    margin: 5px 0 10px 0;
+}
 /**** Media Queries ****/
-@media screen and (max-width: 1400px){
+@media screen and (max-width: 1400px) {
     .topic-selection {
         text-align: left;
         padding-left: 75px;
@@ -90,7 +113,11 @@ body {
     }
 
 }
-
+@media screen and (max-width: 1199px) {
+    #confirmation-container h3 {
+        font-size: calc(1.3rem + .3vw);
+    }
+}
 @media screen and (max-width: 991px) {
     .topic-selection {
         padding-left: 75px;
@@ -98,8 +125,10 @@ body {
     .topics {
         max-width: 75% !important;
     }
+    #confirmation-hr {
+        width: 70%;
+    }
 }
-
 @media screen and (max-width: 767px) {
     .topic-selection {
         padding-left: 70px;
@@ -107,8 +136,13 @@ body {
     .topics {
         max-width: 100% !important;
     }
+    #confirmation-hr {
+        width: 75%;
+    }
+    #confirmation-location {
+        font-size: .65rem;
+    }
 }
-
 @media screen and (max-width: 488px) {
     .topic-selection {
         padding-left: 55px;
@@ -116,8 +150,19 @@ body {
     .topics {
         max-width: 100% !important;
     }
+    #confirmation-container h3 {
+        font-size: calc(1.2rem + .2vw);
+    }
+    #topics-selected {
+        font-size: 13px;
+    }
+    #confirmation-hr {
+        width: 80%;
+    }
+    #confirmation-location {
+        font-size: .6rem;
+    }
 }
-
 @media screen and (max-width: 450px) {
     .topics-header {
         font-size: 17px
@@ -131,5 +176,15 @@ body {
     }
     .form-control {
         font-size: 12px !important;
+    }
+    #confirmation-container {
+        width: 80%;
+    }
+}
+@media screen and (max-width: 400px) {
+    #confirmation-container {
+        width: 85%;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }

@@ -25,7 +25,6 @@ const subscriberSchema = new mongoose.Schema({
     email: {
         required: true,
         type: String,
-
     },
     interests: {
         required: true,
@@ -46,12 +45,12 @@ app.get("/", function(req, res){
 });
 
 app.post("/", function(req,res){
-
     // User Details
     const firstName = req.body.firstName,
     lastName = req.body.lastName,
     email = req.body.email;
     // User newsletter interests
+    const topics = [];
     const edmNews = req.body.edmCheckbox, 
     selfDevNews = req.body.selfDevCheckbox,
     seoNews = req.body.seoCheckbox,
@@ -60,7 +59,6 @@ app.post("/", function(req,res){
     Subscriber.findOne({email: email}, function(err, result){
 
         if (!err){
-
             // User has not signed up
             if (!result){
                 console.log("New subscriber: ", firstName, lastName);
@@ -73,6 +71,7 @@ app.post("/", function(req,res){
                 });
                 if (edmNews){
                     subscriber.interests.edm = true;
+                    topics.push("Electronic Dance Music");
                     console.log(firstName, lastName,"- Interested in edm");
                 }else {
                     subscriber.interests.edm = false;
@@ -80,6 +79,7 @@ app.post("/", function(req,res){
                 }
                 if (selfDevNews){
                     subscriber.interests.selfDevelopment = true;
+                    topics.push("Self Development");
                     console.log(firstName, lastName,"- Interested in self development");
                 }else {
                     subscriber.interests.selfDevelopment = false;
@@ -87,6 +87,7 @@ app.post("/", function(req,res){
                 }
                 if (seoNews){
                     subscriber.interests.seo = true;
+                    topics.push("Search Engine Optimization");
                     console.log(firstName, lastName,"- Interested in seo");
                 }else {
                     subscriber.interests.seo = false;
@@ -94,6 +95,7 @@ app.post("/", function(req,res){
                 }
                 if (cryptoNews){
                     subscriber.interests.crypto = true;
+                    topics.push("Crypto");
                     console.log(firstName, lastName,"- Interested in crypto");
                 }else {
                     subscriber.interests.crypto = false;
@@ -101,12 +103,12 @@ app.post("/", function(req,res){
                 }
                 subscriber.save();
 
-                // Google OAuth2
+                // Google OAuth2 - This might need to be done before the POST as it does take a while to redirect if succesful...
                 const oauth2Client = new google.auth.OAuth2(
                     process.env.CLIENT_ID, 
                     process.env.CLIENT_SECRET, 
                     process.env.REDIRECT_URI
-                    );
+                );
                 oauth2Client.setCredentials({refresh_token: process.env.REFRESH_TOKEN});
                 const accessToken = oauth2Client.getAccessToken(function(err){
                     if(!err) {
@@ -145,8 +147,15 @@ app.post("/", function(req,res){
                         console.log("The message was sent");
                         console.log("Message ID:", info.messageId);
                         console.log("Message Response:", info.response);
+                        res.render("confirmation", {
+                            pageTitle: "Newsletter Confirmation",
+                            subscriberName: firstName,
+                            email: email,
+                            topics: topics
+                        });
                     } else {
                         console.log(err);
+                        // Redirect to failure page and remove subscriber from DB
                     }
                 });
             } else { 
