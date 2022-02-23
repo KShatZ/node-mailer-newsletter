@@ -1,19 +1,26 @@
 // Validate Topic Selection
 const form = document.getElementById("newsletterForm");
-const validityCheckbox = document.getElementById("edmCheck")
-    .setCustomValidity("Please select at least one topic...");
+const checkboxes = document.querySelectorAll("input[type=checkbox]");
+const validityCheckbox = document.getElementById("edmCheck");
 
+// Checking checkbox validity on submit
 form.addEventListener("submit", function(event){
-    const checkboxes = document.querySelectorAll("input[type=checkbox]");
     let counter = 0;
     checkboxes.forEach(function(checkbox){
         if (checkbox.checked) {
             counter++; 
         }
     });
-    if (counter === 0) {
+    if (counter == 0) {
         event.preventDefault();
+        validityCheckbox.setCustomValidity("Please select at least one topic...");
         validityCheckbox.reportValidity();
-        console.log("No checkbox was selected.... validate");
     }
+});
+
+// Clearing checkbox validity - needed to 'reset' form
+checkboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", function(event) {
+        validityCheckbox.setCustomValidity("");
+    });
 });
