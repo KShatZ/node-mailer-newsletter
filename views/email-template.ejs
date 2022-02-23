@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="background-color: #393E46; color: #EEEEEE; text-align: center; padding: 50px;">
+    <div style="border: 1px solid #222831;">
+        <table style="margin: 15px auto 15px auto;">
+            <tbody>
+                <tr>
+                    <td style="font-size: 2.5rem;">&nbsp;Welcome to the Family <%=subscriberName%></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="border-top: 1px solid #00ADB5; margin: auto; width: 75%">&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 15px;">
+                        <div style="margin: auto; width: 65%;">
+                            <div>Thank you for subscribing to our newsletter! Every month we send out our newsletter containing the top news from each topic that you have selected below.</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 30px;">
+                        <div style="margin: auto;">
+                            <%topics.forEach(function (topic) {%>
+                                <div><%=topic%></div>
+                            <%});%>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><small>If you wish to unsubscribe, click <a href="/" style="color:#00ADB5;">here</a></small></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

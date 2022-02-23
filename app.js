@@ -3,6 +3,8 @@ const express = require("express");
 const { google } = require("googleapis");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
+const fs = require("fs");
+const ejs = require("ejs");
 
 // Application Configuration
 const app = express();
@@ -123,35 +125,37 @@ app.post("/", function(req,res){
                         clientSecret: process.env.CLIENT_SECRET
                     }
                 });
-                let message = {
-                    from: "Newsletter Test",
-                    to: email,
-                    subject: "Thank You to Subscribing to our Newsletter!",
-                    html:
-                    `<h1>Welcome to the family ${firstName} ${lastName}!</h1>
-                    <p>
-                    Thank you for signing up to our Newsletter! You will start to receive articles based 
-                    on the interests you selected starting on the next rotation
-                    </p>`
-                }
-                transporter.sendMail(message, function(err, info){
+        
+                ejs.renderFile("views/email-template.ejs", {subscriberName:firstName, topics:topics}, function(err, email_template){
                     if (!err) {
-                        res.render("confirmation", {
-                            pageTitle: "Newsletter Confirmation",
-                            subscriberName: firstName,
-                            email: email,
-                            topics: topics
+                        let message = {
+                            from: "Newsletter Test",
+                            to: email,
+                            subject: "Thank You to Subscribing to our Newsletter!",
+                            html: email_template
+                        }
+                        transporter.sendMail(message, function(err, info){
+                            if (!err) {
+                                res.render("confirmation", {
+                                    pageTitle: "Newsletter Confirmation",
+                                    subscriberName: firstName,
+                                    email: email,
+                                    topics: topics
+                                });
+                            } else {
+                                console.log(err);
+                                // Alert user of failure and remove from DB
+                                Subscriber.deleteOne({email: email}, function(err){
+                                    if (!err) {
+                                        res.send("<script>alert('There was an issue with the email service, please try again...'); window.location.href = '/';</script>");
+                                    } else {
+                                        console.log(err);
+                                    }
+                                });
+                            }
                         });
                     } else {
                         console.log(err);
-                        // Alert user of failure and remove from DB
-                        Subscriber.deleteOne({email: email}, function(err){
-                            if (!err) {
-                                res.send("<script>alert('There was an issue with the email service, please try again...'); window.location.href = '/';</script>");
-                            } else {
-                                console.log(err);
-                            }
-                        });
                     }
                 });
             } else { 
