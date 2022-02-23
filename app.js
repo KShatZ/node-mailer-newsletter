@@ -40,7 +40,6 @@ const subscriberSchema = new mongoose.Schema({
 });
 const Subscriber = mongoose.model("Subscriber", subscriberSchema);
 
-
 // ROUTING
 app.get("/", function(req, res){
     res.render("sign-up", {pageTitle: "Sign Up"});
@@ -97,7 +96,7 @@ app.post("/", function(req,res){
                 }
                 subscriber.save();
 
-                // Google OAuth2 - This might need to be done before the POST as it does take a while to redirect if succesful...
+                // Google OAuth2 - This might need to be done before the POST as it does take a while *to redirect if succesful...
                 const oauth2Client = new google.auth.OAuth2(
                     process.env.CLIENT_ID, 
                     process.env.CLIENT_SECRET, 
@@ -111,7 +110,7 @@ app.post("/", function(req,res){
                         console.log(err);
                     }
                 });
-                // Mail Set Up
+                // Mail Object Set Up
                 let transporter = nodemailer.createTransport({
                     host: "smtp.gmail.com",
                     port: 465,
@@ -125,11 +124,11 @@ app.post("/", function(req,res){
                         clientSecret: process.env.CLIENT_SECRET
                     }
                 });
-        
+                // Send Mail
                 ejs.renderFile("views/email-template.ejs", {subscriberName:firstName, topics:topics}, function(err, email_template){
                     if (!err) {
                         let message = {
-                            from: "Newsletter Test",
+                            from: "Kirill Newsletter Test",
                             to: email,
                             subject: "Thank You to Subscribing to our Newsletter!",
                             html: email_template
