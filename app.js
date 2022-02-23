@@ -72,34 +72,26 @@ app.post("/", function(req,res){
                 if (edmNews){
                     subscriber.interests.edm = true;
                     topics.push("Electronic Dance Music");
-                    console.log(firstName, lastName,"- Interested in edm");
                 }else {
                     subscriber.interests.edm = false;
-                    console.log(firstName, lastName,"- Not interested in edm");
                 }
                 if (selfDevNews){
                     subscriber.interests.selfDevelopment = true;
                     topics.push("Self Development");
-                    console.log(firstName, lastName,"- Interested in self development");
                 }else {
                     subscriber.interests.selfDevelopment = false;
-                    console.log(firstName, lastName,"- Not interested in self development");
                 }
                 if (seoNews){
                     subscriber.interests.seo = true;
                     topics.push("Search Engine Optimization");
-                    console.log(firstName, lastName,"- Interested in seo");
                 }else {
                     subscriber.interests.seo = false;
-                    console.log(firstName, lastName,"- Not interested in seo");
                 }
                 if (cryptoNews){
                     subscriber.interests.crypto = true;
                     topics.push("Crypto");
-                    console.log(firstName, lastName,"- Interested in crypto");
                 }else {
                     subscriber.interests.crypto = false;
-                    console.log(firstName, lastName,"- Not interested in crypto");
                 }
                 subscriber.save();
 
@@ -144,9 +136,6 @@ app.post("/", function(req,res){
                 }
                 transporter.sendMail(message, function(err, info){
                     if (!err) {
-                        console.log("The message was sent");
-                        console.log("Message ID:", info.messageId);
-                        console.log("Message Response:", info.response);
                         res.render("confirmation", {
                             pageTitle: "Newsletter Confirmation",
                             subscriberName: firstName,
@@ -158,8 +147,6 @@ app.post("/", function(req,res){
                         // Alert user of failure and remove from DB
                         Subscriber.deleteOne({email: email}, function(err){
                             if (!err) {
-                                console.log("There was an error sending the email...");
-                                console.log("User was removed from database and no email was sent");
                                 res.send("<script>alert('There was an issue with the email service, please try again...'); window.location.href = '/';</script>");
                             } else {
                                 console.log(err);
@@ -168,10 +155,9 @@ app.post("/", function(req,res){
                     }
                 });
             } else { 
-                console.log("You have already signed up for our newsletter.")
+                res.send("<script>alert('You have already signed up for our newsletter!'); window.location.href = '/';</script>");
             }
         } else {
-            console.log("There is an error")
             console.log(err);
         }
     });
