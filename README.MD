@@ -5,7 +5,9 @@
 This application is meant to mimic a newsletter sign-up process. The user is asked for their name, email, and what topics they would like to "receive" in the newsletter. Upon receiving the user's details the application redirects to a success page, adds users details to a database and sends a confirmation email to the provided address. The user will only receive one email (the confirmation) and will not actually be 'signed-up' to receive any further emails.
 
 ---
-You can view a live version of the application [here]().
+
+You can view a live version of the application [here](https://kirill-nodemailer-newsletter.herokuapp.com/).
+
 ---
 
 ## How to run this project locally?
